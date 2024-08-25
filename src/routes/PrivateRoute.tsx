@@ -2,6 +2,8 @@ import { FC } from 'react'
 
 import { Navigate } from 'react-router-dom'
 
+import { useAuthStore } from '../store'
+
 // import { useAuth } from '../hooks/useAuth/useAuth'
 
 type Props = {
@@ -13,9 +15,9 @@ const PrivateRoute: FC<Props> = ({
   component: Component,
   redirectTo = '/',
 }) => {
-  // const { isLoggedIn, isRefreshing } = useAuth()
+  const { isLoggedIn } = useAuthStore()
 
-  const isLoggedIn = false
+  // const isLoggedIn = false
   const isRefreshing = false
   const shouldRedirect = !isLoggedIn && !isRefreshing
 

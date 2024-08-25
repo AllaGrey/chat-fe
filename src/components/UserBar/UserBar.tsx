@@ -8,19 +8,19 @@ import { UserAvatar } from '../UserAvatar'
 import styles from './UserBar.module.css'
 
 export const UserBar: FC = () => {
-  const currentUser = useAuthStore()
+  const { currentUser, signOut } = useAuthStore()
   const handleClick = () => {
-    console.log('User logged in')
+    signOut()
     console.log(currentUser)
-    useAuthStore()
-
-    // Perform login logic here
   }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles['user-bar']}>
         <UserAvatar photo={randomPhoto} />
-        <Button onClick={handleClick}>Login</Button>
+        <p>{currentUser?.name}</p>
+
+        <Button onClick={handleClick}>Logout</Button>
       </div>
       <SearchInput />
     </div>

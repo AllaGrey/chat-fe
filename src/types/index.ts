@@ -1,1 +1,1 @@
-export type { LoginFormInputs } from './formDataTypes'
+export type { LoginFormInputs, RegisterFormInputs } from './formDataTypes'

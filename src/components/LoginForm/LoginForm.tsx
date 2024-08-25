@@ -2,16 +2,17 @@ import { FC, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { loginFormSchema } from '../../services'
-import { login } from '../../services/operations'
+import { useAuthStore } from '../../store'
 import { LoginFormInputs } from '../../types'
 import { Button } from '../Button'
 import { Icon } from '../Icon'
 import styles from './LoginForm.module.css'
 
 export const LoginForm: FC = () => {
+  const { signIn } = useAuthStore()
   const {
     handleSubmit,
     register,
@@ -23,9 +24,16 @@ export const LoginForm: FC = () => {
 
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false)
 
+  const navigate = useNavigate()
+
   const handleLoginSubmit = async (data: LoginFormInputs) => {
     console.log(data, 'loginForm')
-    await login(data)
+    try {
+      await signIn(data.email, data.password)
+      navigate('/')
+    } catch (error) {
+      console.error('Login failed:', error)
+    }
   }
 
   return (

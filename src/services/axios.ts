@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// import { store } from '../store'
+import { useAuthStore } from '../store'
 
 const BASE_URL = 'https://chat-be-nine.vercel.app/api/'
 
@@ -11,14 +11,18 @@ export const axiosPublic = axios.create({
   },
 })
 
+const getAccessToken = () => {
+  const { currentUser } = useAuthStore.getState()
+  return currentUser?.accessToken
+}
+
 axiosPublic.interceptors.request.use(
   config => {
-    // const state = store.getState()
-    // const token = state.auth.token
+    const accessToken = getAccessToken()
 
-    // if (token) {
-    //   config.headers['Authorization'] = `Bearer ${token}`
-    // }
+    if (accessToken) {
+      config.headers['Authorization'] = `Bearer ${accessToken}`
+    }
 
     return config
   },

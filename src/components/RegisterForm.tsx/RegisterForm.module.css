@@ -1,0 +1,48 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 86px;
+  align-items: center;
+  justify-content: center;
+  min-width: 300px;
+  max-width: 480px;
+  min-height: 400px;
+  border-radius: 16px;
+  box-shadow: var(--box-shadow-base);
+  padding: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 4px;
+  padding: 8px;
+  padding-right: 28px;
+  border: 1px solid var(--primary-color);
+  transition: var(--transition);
+  background-color: var(--bg-color);
+}
+
+.input:focus-within {
+  border-color: var(--accent-color);
+}
+
+.errorMessage {
+  color: var(--error-color);
+  font-size: 12px;
+}
+
+.iconWrapper {
+  position: absolute;
+  top: 38px;
+  right: 5px;
+}
