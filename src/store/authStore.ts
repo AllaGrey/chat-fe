@@ -1,24 +1,24 @@
 import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
 
+// import { immer } from 'zustand/middleware/immer'
 import { currentUser } from '../mocks'
 
-interface IUser {
-  id: string
-  name: string
-  surname: string
-  avatar: string
-}
+// interface IUser {
+//   id: string
+//   name: string
+//   surname: string
+//   avatar: string
+// }
 
-interface IUserState {
-  currentUser: IUser | null
-  isLoggedIn: boolean
-}
+// interface IUserState {
+//   currentUser: IUser | null
+//   isLoggedIn: boolean
+// }
 
-const initialState = {
-  currentUser: null,
-  isLoggedIn: false,
-}
+// const initialState = {
+//   currentUser: null,
+//   isLoggedIn: false,
+// }
 
 export const useAuthStore = create(set => ({
   currentUser: null,
