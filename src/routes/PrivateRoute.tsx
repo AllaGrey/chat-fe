@@ -15,7 +15,7 @@ const PrivateRoute: FC<Props> = ({
 }) => {
   // const { isLoggedIn, isRefreshing } = useAuth()
 
-  const isLoggedIn = true
+  const isLoggedIn = false
   const isRefreshing = false
   const shouldRedirect = !isLoggedIn && !isRefreshing
 
