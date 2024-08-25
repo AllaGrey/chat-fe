@@ -1,0 +1,32 @@
+.label {
+  width: 100%;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 30px;
+  border-radius: 10px;
+  border: 1px solid var(--primary-color);
+  transition: var(--transition);
+  background-color: var(--bg-color);
+}
+
+.input:focus-within {
+  border-color: var(--accent-color);
+}
+
+.sendButton {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  color: var(--primary-color);
+  transition: var(--transition);
+  background-color: transparent;
+}
+
+.sendButton:hover,
+.sendButton:focus {
+  color: var(--accent-color);
+}

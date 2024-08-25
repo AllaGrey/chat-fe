@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+  background-color: var(--bg-color);
+  box-shadow: var(--box-shadow-base);
+  cursor: pointer;
+}
+
+.wrapper:not(:last-child) {
+  border-bottom: 1px solid var(--secondary-bg-color);
+}
+
+.chatContent {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.chatDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.chatName {
+  font-weight: bold;
+  font-size: medium;
+}
+
+.chatMessage {
+  font-size: small;
+}
+
+.chatTimestamp {
+  font-size: small;
+  font-style: italic;
+  opacity: 0.5;
+}

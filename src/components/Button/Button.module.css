@@ -1,0 +1,16 @@
+.button {
+  min-width: 100px;
+  width: fit-content;
+  min-height: 40px;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow-base);
+  color: var(--secondary-text-color);
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: var(--box-shadow-active);
+}
