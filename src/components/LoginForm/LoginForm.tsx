@@ -13,13 +13,8 @@ import styles from './LoginForm.module.css'
 
 export const LoginForm: FC = () => {
   const {
-    control,
     handleSubmit,
-    watch,
     register,
-    reset,
-    setValue,
-    trigger,
     formState: { errors },
   } = useForm<LoginFormInputs>({
     defaultValues: { email: '', password: '' },
