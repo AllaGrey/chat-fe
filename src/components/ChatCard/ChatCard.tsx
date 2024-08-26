@@ -6,17 +6,18 @@ import styles, { chatDetails } from './ChatCard.module.css'
 
 type Props = {
   chat: {
-    id: number
+    id: string
     name: string
     lastMessage: string
     createdAt: string
   }
+  openDialog: () => void
 }
 
-export const ChatCard: FC<Props> = ({ chat }) => {
+export const ChatCard: FC<Props> = ({ chat, openDialog }) => {
   const { name, lastMessage, createdAt } = chat
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={openDialog}>
       <div className={styles.chatContent}>
         <UserAvatar photo={randomPhoto} />
         <div className={chatDetails}>

@@ -58,8 +58,8 @@ export const RegisterForm: FC = () => {
           placeholder="Name"
           {...register('name')}
         />
-        {errors?.email && (
-          <span className={styles.errorMessage}>{errors.email.message}</span>
+        {errors?.name && (
+          <span className={styles.errorMessage}>{errors.name.message}</span>
         )}
       </label>
 

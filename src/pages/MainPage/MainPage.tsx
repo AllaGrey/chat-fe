@@ -1,18 +1,24 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import { ChatDialog } from '../../components/ChatDialog'
 import { ChatList } from '../../components/ChatList'
 import { UserBar } from '../../components/UserBar'
+import styles from './MainPage.module.css'
 
 const MainPage: FC = () => {
+  const [isChatDialogOpened, setIsChatDialogOpened] = useState<boolean>(false)
+  const [openedChat, setOpenedChat] = useState<string>('')
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{ minWidth: '500px' }}>
+      <div className={styles.container}>
+        <div className={styles.chatsMenu}>
           <UserBar />
-          <ChatList />
+          <ChatList openDialog={() => setIsChatDialogOpened(true)} />
         </div>
-        <ChatDialog />
+        <ChatDialog
+          isChatDialogOpened={isChatDialogOpened}
+          toggleOpenChat={() => setIsChatDialogOpened(!isChatDialogOpened)}
+        />
       </div>
     </>
   )

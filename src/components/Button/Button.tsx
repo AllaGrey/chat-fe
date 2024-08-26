@@ -5,8 +5,9 @@ import styles from './Button.module.css'
 type Props = {
   children: ReactNode
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
-  title?: 'button' | 'submit'
+  title?: string
   type?: 'button' | 'submit' | 'reset'
+  isDisabled?: boolean
 }
 
 export const Button: FC<Props> = ({
@@ -14,6 +15,7 @@ export const Button: FC<Props> = ({
   onClick,
   title = 'Login button',
   type = 'button',
+  isDisabled = false,
 }) => {
   return (
     <button
@@ -21,6 +23,7 @@ export const Button: FC<Props> = ({
       title={title}
       onClick={onClick ? e => onClick(e) : undefined}
       className={styles.button}
+      disabled={isDisabled}
     >
       {children}
     </button>

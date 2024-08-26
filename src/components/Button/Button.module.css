@@ -14,3 +14,11 @@
   color: var(--text-color);
   box-shadow: var(--box-shadow-active);
 }
+
+.button:disabled {
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-text-color);
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}

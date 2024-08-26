@@ -10,3 +10,8 @@ export type RegisterFormInputs = {
   password: string
   confirmPassword: string
 }
+
+export type SettingsFormInputs = {
+  name: string
+  surname: string
+}

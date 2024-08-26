@@ -1,0 +1,15 @@
+.backLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: var(--primary-color);
+  transition: var(--transition);
+}
+
+.backLink:hover,
+.backLink:active,
+.backLink:focus {
+  color: var(--accent-color);
+}

@@ -1,5 +1,7 @@
 declare const styles: {
-  readonly "user-bar": string;
+  readonly "navLink": string;
+  readonly "userBar": string;
+  readonly "userInfo": string;
   readonly "wrapper": string;
 };
 export = styles;

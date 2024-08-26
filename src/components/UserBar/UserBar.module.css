@@ -4,10 +4,30 @@
   gap: 20px;
   padding: 10px;
   background-color: var(--secondary-bg-color);
+  box-shadow: var(--box-shadow-active);
 }
 
-.user-bar {
+.userBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: var(--transition);
+  color: var(--text-color);
+}
+
+.navLink:hover {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
 }

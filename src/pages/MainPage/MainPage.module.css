@@ -1,6 +1,17 @@
 .container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 10px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 20px;
+}
+
+.chatsMenu {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: var(--box-shadow-base);
+  overflow: hidden;
+
+  @media screen and (min-width: 768px) {
+    min-width: 500px;
+  }
 }

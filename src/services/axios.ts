@@ -13,6 +13,7 @@ export const axiosPublic = axios.create({
 
 const getAccessToken = () => {
   const { currentUser } = useAuthStore.getState()
+  if (!currentUser) return JSON.stringify(localStorage.getItem('token'))
   return currentUser?.accessToken
 }
 

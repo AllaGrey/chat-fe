@@ -7,19 +7,26 @@ import { MessageList } from '../MessageList'
 import { UserAvatar } from '../UserAvatar'
 import styles from './ChatDialog.module.css'
 
-export const ChatDialog: FC = () => {
-  const isDialogOpen = true
+type Props = {
+  isChatDialogOpened: boolean
+  toggleOpenChat: () => void
+}
+
+export const ChatDialog: FC<Props> = ({
+  isChatDialogOpened,
+  toggleOpenChat,
+}) => {
   return (
     <div
       className={[
         styles.wrapper,
-        `${isDialogOpen ? styles.openedDialog : ''}`,
+        `${isChatDialogOpened ? styles.openedDialog : ''}`,
       ].join(' ')}
     >
       <div className={styles.topDialog}>
         <UserAvatar photo={randomPhoto} />
         <p>User Name</p>
-        <button className={styles.closeButton}>
+        <button className={styles.closeButton} onClick={toggleOpenChat}>
           <Icon width={30} height={30} iconName="close" />
         </button>
       </div>
