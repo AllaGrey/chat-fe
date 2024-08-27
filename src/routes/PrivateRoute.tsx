@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '../store'
 
 type Props = {
-  component: React.ComponentType<unknown>
+  component: React.ComponentType
   redirectTo: string
 }
 

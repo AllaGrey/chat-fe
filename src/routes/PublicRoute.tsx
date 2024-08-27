@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 type Props = {
-  component: React.ComponentType<unknown>
+  component: React.ComponentType
   redirectTo: string
 }
 
