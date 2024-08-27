@@ -16,3 +16,7 @@ export type SettingsFormInputs = {
   surname: string
   avatar: string
 }
+
+export type SignUpInputs = Omit<RegisterFormInputs, 'confirmPassword'> & {
+  avatar: string
+}

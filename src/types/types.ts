@@ -1,3 +1,5 @@
+import { SignUpInputs } from '.'
+
 export interface IUser {
   id: string
   name: string
@@ -16,7 +18,7 @@ export interface IUserState {
   currentUser: IUser | null
   isLoggedIn: boolean
   isLoading: boolean
-  signUp: (userData: IUserState) => Promise<void>
+  signUp: (userData: SignUpInputs) => Promise<void>
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => void
   updateUser: (data: IUserToUpdate) => Promise<void>

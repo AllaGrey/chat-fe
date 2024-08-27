@@ -42,7 +42,7 @@ export const RegisterForm: FC = () => {
       await signUp({ name, surname, email, password, avatar })
       navigate('/')
     } catch (error) {
-      console.error('Login failed:', error)
+      console.error('Register failed:', error)
     }
 
     navigate('/')
