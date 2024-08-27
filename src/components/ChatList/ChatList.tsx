@@ -11,7 +11,7 @@ type Props = {
 export const ChatList: FC<Props> = ({ openDialog }) => {
   return (
     <div className={styles.wrapper}>
-      <h2>Chats</h2>
+      <h2 className={styles.header}>Chats</h2>
       {chatListData.map(chat => (
         <ChatCard key={chat.id} chat={chat} openDialog={openDialog} />
       ))}

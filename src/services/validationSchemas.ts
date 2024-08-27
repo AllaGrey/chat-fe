@@ -58,4 +58,5 @@ export const registerFormSchema = yup.object({
 export const updateUserFormSchema = yup.object({
   name: yup.string().required(VALIDATION_MESSAGES.required).min(3).max(30),
   surname: yup.string().required(VALIDATION_MESSAGES.required).min(3).max(30),
+  avatar: yup.string().required(VALIDATION_MESSAGES.required),
 })

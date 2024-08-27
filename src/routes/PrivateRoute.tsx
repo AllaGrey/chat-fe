@@ -4,10 +4,8 @@ import { Navigate } from 'react-router-dom'
 
 import { useAuthStore } from '../store'
 
-// import { useAuth } from '../hooks/useAuth/useAuth'
-
 type Props = {
-  component: React.ComponentType<any>
+  component: React.ComponentType<unknown>
   redirectTo: string
 }
 
@@ -15,11 +13,9 @@ const PrivateRoute: FC<Props> = ({
   component: Component,
   redirectTo = '/',
 }) => {
-  const { isLoggedIn } = useAuthStore()
+  const { isLoggedIn, isLoading } = useAuthStore()
 
-  // const isLoggedIn = false
-  const isRefreshing = false
-  const shouldRedirect = !isLoggedIn && !isRefreshing
+  const shouldRedirect = !isLoggedIn && !isLoading
 
   return shouldRedirect ? <Navigate to={redirectTo} /> : <Component />
 }

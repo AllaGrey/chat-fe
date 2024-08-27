@@ -46,3 +46,9 @@
   top: 38px;
   right: 5px;
 }
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

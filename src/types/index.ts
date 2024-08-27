@@ -3,3 +3,5 @@ export type {
   RegisterFormInputs,
   SettingsFormInputs,
 } from './formDataTypes'
+
+export type { IUser, IUserToUpdate, IUserState } from './types'

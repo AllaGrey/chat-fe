@@ -20,7 +20,7 @@ export const UserBar: FC = () => {
     <div className={styles.wrapper}>
       <div className={styles.userBar}>
         <div className={styles.userInfo}>
-          <UserAvatar photo={randomPhoto} />
+          <UserAvatar photo={currentUser?.avatar || randomPhoto} />
           <p>{currentUser?.name}</p>
         </div>
         <div className={styles.userInfo}>

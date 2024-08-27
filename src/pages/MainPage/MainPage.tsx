@@ -7,7 +7,6 @@ import styles from './MainPage.module.css'
 
 const MainPage: FC = () => {
   const [isChatDialogOpened, setIsChatDialogOpened] = useState<boolean>(false)
-  const [openedChat, setOpenedChat] = useState<string>('')
   return (
     <>
       <div className={styles.container}>

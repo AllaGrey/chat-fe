@@ -14,4 +14,5 @@ export type RegisterFormInputs = {
 export type SettingsFormInputs = {
   name: string
   surname: string
+  avatar: string
 }

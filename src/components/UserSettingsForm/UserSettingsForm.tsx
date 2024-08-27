@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
@@ -8,6 +8,7 @@ import { randomPhoto } from '../../mocks'
 import { updateUserFormSchema } from '../../services'
 import { useAuthStore } from '../../store'
 import { SettingsFormInputs } from '../../types'
+import { getRandomAvatar } from '../../utils'
 import { Button } from '../Button'
 import { UserAvatar } from '../UserAvatar'
 import styles from './UserSettingsForm.module.css'
@@ -17,16 +18,34 @@ export const UserSettingsForm: FC = () => {
   const {
     handleSubmit,
     register,
+    setValue,
+    watch,
     formState: { errors, isDirty },
   } = useForm<SettingsFormInputs>({
     defaultValues: {
-      name: currentUser?.name || '',
-      surname: currentUser?.surname || '',
+      name: currentUser?.name,
+      surname: currentUser?.surname,
+      avatar: currentUser?.avatar || randomPhoto,
     },
     resolver: yupResolver(updateUserFormSchema),
   })
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (currentUser) {
+      setValue('name', currentUser.name)
+      setValue('surname', currentUser.surname)
+      setValue('avatar', currentUser.avatar || randomPhoto)
+    }
+  }, [currentUser, setValue])
+
+  const avatar = watch('avatar')
+
+  const handleChangeAvatar = () => {
+    const newAvatar = getRandomAvatar()
+    setValue('avatar', newAvatar, { shouldDirty: true })
+  }
 
   const handleUpdateUserSubmit = async (data: SettingsFormInputs) => {
     console.log(data, 'handleUpdateUserSubmit')
@@ -44,7 +63,17 @@ export const UserSettingsForm: FC = () => {
       className={styles.formContainer}
       onSubmit={handleSubmit(handleUpdateUserSubmit)}
     >
-      <UserAvatar photo={randomPhoto} />
+      <label
+        className={styles.avatar}
+        title="Click to change avatar"
+        onClick={handleChangeAvatar}
+      >
+        <UserAvatar photo={avatar || randomPhoto} />
+        {errors?.avatar && (
+          <span className={styles.errorMessage}>{errors.avatar.message}</span>
+        )}
+      </label>
+
       <label className={styles.inputContainer}>
         <span>Name</span>
         <input

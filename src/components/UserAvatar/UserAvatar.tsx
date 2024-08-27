@@ -8,7 +8,7 @@ type Props = {
 
 export const UserAvatar: FC<Props> = ({ photo }) => {
   return (
-    <div className={styles['user-avatar']}>
+    <div className={styles.userAvatar}>
       <img src={photo} alt="avatar photo" />
     </div>
   )

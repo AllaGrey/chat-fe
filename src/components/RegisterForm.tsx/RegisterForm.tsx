@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { registerFormSchema } from '../../services'
 import { useAuthStore } from '../../store'
 import { RegisterFormInputs } from '../../types'
+import { getRandomAvatar } from '../../utils'
 import { Button } from '../Button'
 import { Icon } from '../Icon'
 import styles from './RegisterForm.module.css'
@@ -34,10 +35,11 @@ export const RegisterForm: FC = () => {
   const navigate = useNavigate()
 
   const handleRegisterSubmit = async (data: RegisterFormInputs) => {
-    console.log(data, 'loginForm')
     const { name, surname, email, password } = data
+
+    const avatar = getRandomAvatar()
     try {
-      await signUp({ name, surname, email, password })
+      await signUp({ name, surname, email, password, avatar })
       navigate('/')
     } catch (error) {
       console.error('Login failed:', error)
@@ -51,6 +53,18 @@ export const RegisterForm: FC = () => {
       className={styles.formContainer}
       onSubmit={handleSubmit(handleRegisterSubmit)}
     >
+      <label className={styles.inputContainer}>
+        <input
+          className={styles.input}
+          placeholder="Name"
+          {...register('name')}
+        />
+        <span>Change avatar</span>
+        {errors?.name && (
+          <span className={styles.errorMessage}>{errors.name.message}</span>
+        )}
+      </label>
+
       <label className={styles.inputContainer}>
         <span>Name</span>
         <input

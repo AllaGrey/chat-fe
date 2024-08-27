@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly "user-avatar": string;
+  readonly "userAvatar": string;
 };
 export = styles;
 
