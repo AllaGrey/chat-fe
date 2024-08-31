@@ -8,7 +8,10 @@ const useSocket = () => {
   const [socket, setSocket] = useState<Socket | null>(null)
 
   useEffect(() => {
-    const socketIo = io(SOCKET_URL)
+    const socketIo = io(SOCKET_URL, {
+      transports: ['websocket'],
+      addTrailingSlash: true,
+    })
     setSocket(socketIo)
 
     return () => {
