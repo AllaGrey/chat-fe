@@ -27,7 +27,6 @@ export const LoginForm: FC = () => {
   const navigate = useNavigate()
 
   const handleLoginSubmit = async (data: LoginFormInputs) => {
-    console.log(data, 'loginForm')
     try {
       await signIn(data.email, data.password)
       navigate('/')

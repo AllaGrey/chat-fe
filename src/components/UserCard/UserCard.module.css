@@ -5,8 +5,6 @@
   width: 100%;
   background-color: var(--bg-color);
   box-shadow: var(--box-shadow-base);
-  cursor: pointer;
-  position: relative;
 }
 
 .wrapper:not(:last-child) {
@@ -33,21 +31,13 @@
   font-size: medium;
 }
 
-.chatMessage {
-  font-size: small;
-}
-
-.chatTimestamp {
-  font-size: small;
-  font-style: italic;
-  opacity: 0.5;
-}
-
-.deleteButton {
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--error-color);
-  cursor: pointer;
-  background-color: transparent;
+.addChatButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--success-color);
+  color: var(--secondary-text-color);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius);
 }

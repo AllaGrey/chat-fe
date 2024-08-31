@@ -1,39 +1,55 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
-import { messages, randomPhoto } from '../../mocks'
+import useSocket from '../../hooks'
+import { randomPhoto } from '../../mocks'
+import { useAuthStore, useChatsStore } from '../../store'
 import { Icon } from '../Icon'
 import { MessageInput } from '../MessageInput'
 import { MessageList } from '../MessageList'
 import { UserAvatar } from '../UserAvatar'
 import styles from './ChatDialog.module.css'
 
-type Props = {
-  isChatDialogOpened: boolean
-  toggleOpenChat: () => void
-}
+export const ChatDialog: FC = () => {
+  const { sendMessage, onMessage } = useSocket()
 
-export const ChatDialog: FC<Props> = ({
-  isChatDialogOpened,
-  toggleOpenChat,
-}) => {
+  const { openedChat, closeChat, addMessage } = useChatsStore()
+  const { currentUser } = useAuthStore()
+
+  useEffect(() => {
+    onMessage(newMessage => addMessage(JSON.parse(newMessage)))
+  }, [onMessage, addMessage])
+
+  const handleSendMessage = (message: string) => {
+    if (!message.trim() || !currentUser) return
+
+    const messageObj = {
+      user: currentUser.id,
+      text: message.trim(),
+      chat: openedChat?._id,
+    }
+
+    sendMessage(JSON.stringify(messageObj))
+  }
   return (
-    <div
-      className={[
-        styles.wrapper,
-        `${isChatDialogOpened ? styles.openedDialog : ''}`,
-      ].join(' ')}
-    >
+    <div className={styles.wrapper}>
       <div className={styles.topDialog}>
-        <UserAvatar photo={randomPhoto} />
-        <p>User Name</p>
-        <button className={styles.closeButton} onClick={toggleOpenChat}>
+        <UserAvatar photo={openedChat?.otherUser?.avatar || randomPhoto} />
+        <p>
+          {openedChat?.otherUser.name} {openedChat?.otherUser.surname}
+        </p>
+        <button
+          className={styles.closeButton}
+          type="button"
+          title="Close dialog"
+          onClick={() => closeChat()}
+        >
           <Icon width={30} height={30} iconName="close" />
         </button>
       </div>
 
-      <div className={styles.contentWrapper}>
-        <MessageList messages={messages} />
-        <MessageInput />
+      <div>
+        <MessageList />
+        <MessageInput onSendMessage={handleSendMessage} />
       </div>
     </div>
   )

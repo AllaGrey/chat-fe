@@ -1,22 +1,24 @@
 import { FC } from 'react'
 
-import { randomPhoto } from '../../mocks'
+import moment from 'moment'
+
+import { useAuthStore } from '../../store'
+import { IMessage } from '../../types/types'
 import { UserAvatar } from '../UserAvatar'
 import styles from './Message.module.css'
 
 type Props = {
-  message: {
-    id: string
-    sender: string
-    text: string
-    createdAt: string
-  }
+  message: IMessage
+  avatar?: string
 }
 
-export const Message: FC<Props> = ({ message }) => {
-  const { sender, text, createdAt } = message
+export const Message: FC<Props> = ({ message, avatar }) => {
+  const { user, text, createdAt } = message
+  const { currentUser } = useAuthStore()
 
-  const isMe = sender === 'Doogy'
+  const isMe = user === currentUser?.id
+
+  const formattedDate = moment(createdAt).format('MMM/D/YYYY, h:mm A')
 
   return (
     <li
@@ -27,13 +29,13 @@ export const Message: FC<Props> = ({ message }) => {
       <div
         className={[
           styles.messageContentWrapper,
-          `${isMe ? styles.myMessage : null}`,
+          isMe ? styles.myMessage : null,
         ].join(' ')}
       >
-        {!isMe && <UserAvatar photo={randomPhoto} />}
+        {!isMe && avatar && <UserAvatar photo={avatar} />}
         <p className={styles.messageContent}>{text}</p>
       </div>
-      <p className={styles.messageDate}>{createdAt}</p>
+      <p className={styles.messageDate}>{formattedDate}</p>
     </li>
   )
 }

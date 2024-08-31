@@ -5,4 +5,11 @@ export type {
   SignUpInputs,
 } from './formDataTypes'
 
-export type { IUser, IUserToUpdate, IUserState } from './types'
+export type {
+  IUser,
+  IUserToUpdate,
+  IUserState,
+  IChatsState,
+  IChat,
+  ILatestMessage,
+} from './types'

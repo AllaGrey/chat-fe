@@ -1,18 +1,8 @@
 .wrapper {
-  /* width: 100%; */
-  width: 0;
-  /* height: fit-content; */
-  border: 2px solid var(--secondary-bg-color);
-  box-shadow: var(--box-shadow-base);
-  transform: translateX(-100%);
-  opacity: 0;
-  transition: var(--transition);
-}
-
-.openedDialog {
   width: 100%;
-  opacity: 1;
-  transform: translateX(0);
+  padding-bottom: 10px;
+  box-shadow: var(--box-shadow-base);
+  transition: var(--transition);
 }
 
 .topDialog {
@@ -22,6 +12,7 @@
   width: 100%;
   background-color: var(--secondary-bg-color);
   position: relative;
+  padding: 10px;
 }
 
 .closeButton {
@@ -30,16 +21,12 @@
   align-items: center;
   color: var(--primary-color);
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   background-color: transparent;
 }
 
 .closeButton:hover,
 .closeButton:focus {
   color: var(--accent-color);
-}
-
-.contentWrapper {
-  padding: 10px;
 }

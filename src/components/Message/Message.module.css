@@ -1,7 +1,6 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  width: fit-content;
   max-width: 80%;
   font-size: var(--font-size-small);
 }
@@ -13,13 +12,15 @@
 }
 
 .messageContent {
-  padding: 15px;
+  padding: 5px 15px;
   background-color: var(--primary-color);
   border-radius: 30px;
-  width: fit-content;
   text-align: left;
   color: var(--secondary-text-color);
   box-shadow: var(--box-shadow-base);
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .messageDate {

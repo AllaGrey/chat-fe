@@ -9,11 +9,12 @@
   --text-color: #212121;
   --secondary-text-color: #f3dbdb;
   --error-color: #f44336;
-
-  --font-family-base: 'Roboto', sans-serif;
+  --success-color: #14b80b;
   --font-size-small: 16px;
   --font-size-base: 20px;
   --font-size-large: 24px;
+
+  --font-family-base: 'Roboto', sans-serif;
 
   --font-weight: normal;
   --font-weight-bold: bold;

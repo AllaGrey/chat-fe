@@ -54,18 +54,6 @@ export const RegisterForm: FC = () => {
       onSubmit={handleSubmit(handleRegisterSubmit)}
     >
       <label className={styles.inputContainer}>
-        <input
-          className={styles.input}
-          placeholder="Name"
-          {...register('name')}
-        />
-        <span>Change avatar</span>
-        {errors?.name && (
-          <span className={styles.errorMessage}>{errors.name.message}</span>
-        )}
-      </label>
-
-      <label className={styles.inputContainer}>
         <span>Name</span>
         <input
           className={styles.input}

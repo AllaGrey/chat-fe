@@ -1,27 +1,26 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
+import { useChatsStore } from '../../store'
 import { Message } from '../Message'
 import styles from './MessageList.module.css'
 
-interface IMessage {
-  id: string
-  sender: string
-  text: string
-  createdAt: string
-}
+export const MessageList: FC = () => {
+  const { messageList, getMessageList, openedChat } = useChatsStore()
 
-type Props = {
-  messages: IMessage[]
-}
-
-export const MessageList: FC<Props> = ({ messages }) => {
-  console.log(messages, 'message list')
+  useEffect(() => {
+    getMessageList()
+  }, [])
 
   return (
     <ul className={styles.wrapper}>
-      {messages.map(message => (
-        <Message key={message.id} message={message} />
-      ))}
+      {messageList.length > 0 &&
+        messageList.map(message => (
+          <Message
+            key={message._id}
+            message={message}
+            avatar={openedChat?.otherUser.avatar}
+          />
+        ))}
     </ul>
   )
 }

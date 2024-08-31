@@ -48,8 +48,6 @@ export const UserSettingsForm: FC = () => {
   }
 
   const handleUpdateUserSubmit = async (data: SettingsFormInputs) => {
-    console.log(data, 'handleUpdateUserSubmit')
-
     try {
       await updateUser(data)
       navigate('/')

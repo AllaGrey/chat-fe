@@ -1,5 +1,8 @@
 .label {
   width: 100%;
+  display: block;
+  margin-top: auto;
+  padding: 0 10px;
   position: relative;
 }
 
@@ -11,6 +14,7 @@
   border: 1px solid var(--primary-color);
   transition: var(--transition);
   background-color: var(--bg-color);
+  width: 100%;
 }
 
 .input:focus-within {
@@ -19,8 +23,8 @@
 
 .sendButton {
   position: absolute;
-  top: 4px;
-  right: 5px;
+  top: 8px;
+  right: 15px;
   color: var(--primary-color);
   transition: var(--transition);
   background-color: transparent;

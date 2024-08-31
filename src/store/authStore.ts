@@ -1,6 +1,12 @@
 import { create } from 'zustand'
 
-import { axiosPublic } from '../services'
+import {
+  getCurrentUser,
+  login,
+  logout,
+  register,
+  updateCurrentUser,
+} from '../services'
 import { IUserState, IUserToUpdate } from '../types'
 
 export const useAuthStore = create<IUserState>(set => ({
@@ -10,114 +16,72 @@ export const useAuthStore = create<IUserState>(set => ({
 
   signUp: async userData => {
     set({ isLoading: true })
-    try {
-      const { data } = await axiosPublic.post('/auth/register', userData)
-      const { name, surname, avatar, access_token: accessToken, _id: id } = data
-      set({
-        currentUser: {
-          id,
-          name,
-          surname,
-          avatar,
-          accessToken,
-        },
-        isLoggedIn: true,
-        isLoading: false,
-      })
-    } catch (error) {
-      console.error('Sign up failed:', error)
-    }
+
+    const user = await register(userData)
+
+    localStorage.setItem('token', user?.accessToken)
+
+    set({
+      currentUser: user,
+      isLoggedIn: true,
+      isLoading: false,
+    })
   },
 
   signIn: async (email, password) => {
     set({ isLoading: true })
-    try {
-      const { data } = await axiosPublic.post('/auth/login', {
-        email,
-        password,
-      })
-      const { name, surname, avatar, access_token: accessToken, _id: id } = data
 
-      localStorage.setItem('token', accessToken)
+    const user = await login({ email, password })
 
-      set({
-        currentUser: {
-          id,
-          name,
-          surname,
-          avatar,
-          accessToken,
-        },
-        isLoggedIn: true,
-        isLoading: false,
-      })
-    } catch (error) {
-      console.error('Sign in failed:', error)
-    }
+    localStorage.setItem('token', user?.accessToken)
+
+    set({
+      currentUser: user,
+      isLoggedIn: true,
+      isLoading: false,
+    })
   },
 
   signOut: async () => {
-    try {
-      await axiosPublic.post('/auth/logout')
+    await logout()
 
-      localStorage.removeItem('token')
-    } catch (error) {
-      console.error('Sign in failed:', error)
-    }
+    localStorage.removeItem('token')
 
     set({ currentUser: null, isLoggedIn: false })
   },
 
   getUser: async () => {
-    try {
-      set({ isLoading: true })
-      const token = localStorage.getItem('token')
-      if (!token) {
-        set({ isLoading: false })
-        return
-      }
-      const { data } = await axiosPublic.get('/users/current')
-      const { name, surname, avatar, access_token: accessToken, id } = data
+    set({ isLoading: true })
 
-      localStorage.setItem('token', accessToken)
+    const token = localStorage.getItem('token')
 
-      set({
-        currentUser: {
-          id,
-          name,
-          surname,
-          avatar,
-          accessToken,
-        },
-        isLoggedIn: true,
-        isLoading: false,
-      })
-    } catch (error) {
-      console.error('getUser failed:', error)
+    if (!token || token === 'undefined') {
+      set({ isLoading: false })
+      return
     }
+
+    const user = await getCurrentUser()
+
+    localStorage.setItem('token', user?.accessToken)
+
+    set({
+      currentUser: user,
+      isLoggedIn: true,
+      isLoading: false,
+    })
   },
 
   updateUser: async (userData: IUserToUpdate) => {
     set({ isLoading: true })
-    try {
-      const { data } = await axiosPublic.put('/users', userData)
-      const { name, surname, avatar, access_token: accessToken, _id: id } = data
 
-      localStorage.setItem('token', accessToken)
+    const user = await updateCurrentUser(userData)
 
-      set({
-        currentUser: {
-          id,
-          name,
-          surname,
-          avatar,
-          accessToken,
-        },
-        isLoggedIn: true,
-        isLoading: false,
-      })
-    } catch (error) {
-      console.error('Sign in failed:', error)
-    }
+    localStorage.setItem('token', user?.accessToken)
+
+    set({
+      currentUser: user,
+      isLoggedIn: true,
+      isLoading: false,
+    })
   },
 }))

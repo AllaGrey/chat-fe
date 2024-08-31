@@ -1,19 +1,22 @@
 import { FC } from 'react'
 
-import { chatListData } from '../../mocks/chatListData'
+import { useChatsStore } from '../../store'
 import { ChatCard } from '../ChatCard'
 import styles from './ChatList.module.css'
 
-type Props = {
-  openDialog: () => void
-}
-
-export const ChatList: FC<Props> = ({ openDialog }) => {
+export const ChatList: FC = () => {
+  const filteredChats = useChatsStore(state =>
+    state.chats.filter(chat =>
+      chat.otherUser.name.toLowerCase().includes(state.filter.toLowerCase())
+    )
+  )
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.header}>Chats</h2>
-      {chatListData.map(chat => (
-        <ChatCard key={chat.id} chat={chat} openDialog={openDialog} />
+      <h2 className={filteredChats.length > 0 ? styles.header : styles.hidden}>
+        Chats
+      </h2>
+      {filteredChats.map(chat => (
+        <ChatCard key={chat._id} chat={chat} />
       ))}
     </div>
   )

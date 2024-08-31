@@ -8,6 +8,7 @@ type Props = {
   title?: string
   type?: 'button' | 'submit' | 'reset'
   isDisabled?: boolean
+  className?: string
 }
 
 export const Button: FC<Props> = ({
@@ -16,13 +17,14 @@ export const Button: FC<Props> = ({
   title = 'Login button',
   type = 'button',
   isDisabled = false,
+  className = '',
 }) => {
   return (
     <button
       type={type}
       title={title}
       onClick={onClick ? e => onClick(e) : undefined}
-      className={styles.button}
+      className={[styles.button, className].join(' ')}
       disabled={isDisabled}
     >
       {children}
