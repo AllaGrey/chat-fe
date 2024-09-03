@@ -1,48 +1,67 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import io, { Socket } from 'socket.io-client'
+import Ably from 'ably'
 
-const SOCKET_URL = import.meta.env.VITE_API_SOCKET_URL
+const ABLY_API_KEY = import.meta.env.VITE_ABLY_API_KEY
 
 const useSocket = () => {
-  const [socket, setSocket] = useState<Socket | null>(null)
+  const [ably, setAbly] = useState<Ably.Realtime | null>(null)
+  const [channel, setChannel] = useState<Ably.RealtimeChannel | null>(null)
 
   useEffect(() => {
-    const socketIo = io(SOCKET_URL, {
-      transports: ['websocket'],
-      addTrailingSlash: true,
-      upgrade: false,
+    const ablyInstance = new Ably.Realtime({ key: ABLY_API_KEY })
+    setAbly(ablyInstance)
+
+    ablyInstance.connection.on('connected', () => {
+      console.log('Connected to Ably')
     })
-    setSocket(socketIo)
+
+    ablyInstance.connection.on('disconnected', () => {
+      console.log('Disconnected from Ably')
+    })
+
+    const ablyChannel = ablyInstance.channels.get('chat')
+    setChannel(ablyChannel)
 
     return () => {
-      socketIo.disconnect()
+      ablyInstance.close()
     }
   }, [])
 
   const sendMessage = useCallback(
     (message: string) => {
-      if (socket) {
-        socket.emit('sendMessage', message)
+      if (channel) {
+        console.log('Sending message to Ably:', message)
+        channel
+          .publish('message', message)
+          .then(() => {
+            console.log('Message sent successfully to Ably')
+          })
+          .catch(err => {
+            console.error('Failed to send message to Ably:', err)
+          })
       }
     },
-    [socket]
+    [channel]
   )
 
   const onMessage = useCallback(
     (callback: (message: string) => void) => {
-      if (socket) {
-        socket.on('message', callback)
+      if (channel) {
+        channel.subscribe('message', msg => {
+          console.log('Received message from Ably:', msg.data)
+          callback(msg.data as string)
+        })
 
         return () => {
-          socket.off('message', callback)
+          channel.unsubscribe('message')
         }
       }
     },
-    [socket]
+    [channel]
   )
 
-  return { socket, sendMessage, onMessage }
+  return { ably, sendMessage, onMessage }
 }
 
 export default useSocket

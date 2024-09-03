@@ -58,6 +58,7 @@ export interface IChatsState {
   deleteChat: (chatId: string) => void
   getMessageList: () => void
   addMessage: (newMessage: IMessage) => void
+  receiveMessage: (newMessage: IMessage) => void
   getAllUsers: () => void
   filterUsers: (filterValue: string) => void
 }

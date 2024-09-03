@@ -6,6 +6,7 @@ import {
   getAllUsers,
   getChatList,
   getChatMessages,
+  sendMessage,
 } from '../services'
 import { IChatsState } from '../types'
 
@@ -69,7 +70,14 @@ export const useChatsStore = create<IChatsState>((set, get) => ({
     set({ messageList, isLoading: false })
   },
 
-  addMessage: newMessage => {
+  addMessage: async newMessage => {
+    await sendMessage(newMessage)
+    // set(state => ({
+    //   messageList: [...state.messageList, message],
+    // }))
+  },
+
+  receiveMessage: newMessage => {
     set(state => ({
       messageList: [...state.messageList, newMessage],
     }))

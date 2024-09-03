@@ -10,16 +10,19 @@ import { UserAvatar } from '../UserAvatar'
 import styles from './ChatDialog.module.css'
 
 export const ChatDialog: FC = () => {
-  const { sendMessage, onMessage } = useSocket()
+  const { onMessage } = useSocket()
 
-  const { openedChat, closeChat, addMessage } = useChatsStore()
+  const { openedChat, closeChat, addMessage, receiveMessage } = useChatsStore()
   const { currentUser } = useAuthStore()
 
   useEffect(() => {
-    onMessage(newMessage => addMessage(JSON.parse(newMessage)))
-  }, [onMessage, addMessage])
+    onMessage(newMessage => {
+      console.log(newMessage)
+      receiveMessage(JSON.parse(newMessage))
+    })
+  }, [onMessage])
 
-  const handleSendMessage = (message: string) => {
+  const handleSendMessage = async (message: string) => {
     if (!message.trim() || !currentUser) return
 
     const messageObj = {
@@ -28,7 +31,10 @@ export const ChatDialog: FC = () => {
       chat: openedChat?._id,
     }
 
-    sendMessage(JSON.stringify(messageObj))
+    console.log(messageObj)
+
+    await addMessage(messageObj)
+    // sendMessage(JSON.stringify(messageObj))
   }
   return (
     <div className={styles.wrapper}>

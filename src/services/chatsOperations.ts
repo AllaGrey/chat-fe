@@ -1,6 +1,7 @@
 import { axiosPublic } from '.'
 import { ENDPOINTS } from '../constants'
 import { IChat } from '../types'
+import { IMessage } from '../types/types'
 
 export const getChatList = async () => {
   try {
@@ -47,6 +48,15 @@ export const getChatMessages = async (chatId: string) => {
 export const getAllUsers = async () => {
   try {
     const { data } = await axiosPublic.get(`${ENDPOINTS.USER}/`)
+    return data
+  } catch (error) {
+    console.log('Error creating new chat', error)
+  }
+}
+
+export const sendMessage = async (message: IMessage) => {
+  try {
+    const { data } = await axiosPublic.post(ENDPOINTS.MESSAGES, message)
     return data
   } catch (error) {
     console.log('Error creating new chat', error)

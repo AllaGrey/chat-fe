@@ -5,5 +5,5 @@ export const ENDPOINTS = {
   CURRENT_USER: '/users/current',
   USER: '/users',
   CHATS: '/chats',
-  MESSAGES: '/messages/:chatId',
+  MESSAGES: '/messages',
 }

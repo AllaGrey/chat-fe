@@ -19,4 +19,5 @@ export {
   deleteChat,
   getChatMessages,
   getAllUsers,
+  sendMessage,
 } from './chatsOperations.ts'
