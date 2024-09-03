@@ -54,7 +54,9 @@ export const getAllUsers = async () => {
   }
 }
 
-export const sendMessage = async (message: IMessage) => {
+export const sendMessage = async (
+  message: Omit<IMessage, '_id' | 'createdAt'>
+) => {
   try {
     const { data } = await axiosPublic.post(ENDPOINTS.MESSAGES, message)
     return data

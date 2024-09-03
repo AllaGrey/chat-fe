@@ -35,6 +35,7 @@ export interface IMessage {
   _id: string
   user: string
   text: string
+  chat: string
   createdAt: string
 }
 
@@ -57,7 +58,7 @@ export interface IChatsState {
   createChat: (partnerId: string) => void
   deleteChat: (chatId: string) => void
   getMessageList: () => void
-  addMessage: (newMessage: IMessage) => void
+  addMessage: (newMessage: Omit<IMessage, '_id' | 'createdAt'>) => void
   receiveMessage: (newMessage: IMessage) => void
   getAllUsers: () => void
   filterUsers: (filterValue: string) => void

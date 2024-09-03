@@ -23,18 +23,17 @@ export const ChatDialog: FC = () => {
   }, [onMessage])
 
   const handleSendMessage = async (message: string) => {
-    if (!message.trim() || !currentUser) return
+    if (!message.trim() || !currentUser || !openedChat) return
 
     const messageObj = {
       user: currentUser.id,
       text: message.trim(),
-      chat: openedChat?._id,
+      chat: openedChat._id,
     }
 
-    console.log(messageObj)
+    // console.log(messageObj)
 
-    await addMessage(messageObj)
-    // sendMessage(JSON.stringify(messageObj))
+    addMessage(messageObj)
   }
   return (
     <div className={styles.wrapper}>
