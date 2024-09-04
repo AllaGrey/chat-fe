@@ -85,32 +85,11 @@ export const useChatsStore = create<IChatsState>((set, get) => ({
   },
 
   receiveMessage: newMessage => {
-    const currentUser = useAuthStore.getState().currentUser?.id
-
-    const isMessageFromOtherUser = newMessage.user !== currentUser
-
-    set(state => {
-      const updatedChats = state.chats.map(chat => {
-        if (chat._id === newMessage.chat) {
-          const unreadMessagesCount = isMessageFromOtherUser
-            ? chat.unreadMessagesCount + 1
-            : chat.unreadMessagesCount
-
-          return {
-            ...chat,
-            unreadMessagesCount,
-          }
-        }
-
-        return chat
-      })
-      return {
-        ...state,
-        messageList: [...state.messageList, newMessage],
-        chats: updatedChats,
-        isLoading: false,
-      }
-    })
+    set(state => ({
+      ...state,
+      messageList: [...state.messageList, newMessage],
+      isLoading: false,
+    }))
   },
 
   updateChatUnreadCount: chatId => {
