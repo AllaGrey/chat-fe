@@ -45,6 +45,15 @@ export const getChatMessages = async (chatId: string) => {
   }
 }
 
+export const readChatMessages = async (chatId: string) => {
+  try {
+    const { data } = await axiosPublic.put(`${ENDPOINTS.CHATS}/${chatId}`)
+    return data
+  } catch (error) {
+    console.log('Error creating new chat', error)
+  }
+}
+
 export const getAllUsers = async () => {
   try {
     const { data } = await axiosPublic.get(`${ENDPOINTS.USER}/`)
@@ -55,7 +64,7 @@ export const getAllUsers = async () => {
 }
 
 export const sendMessage = async (
-  message: Omit<IMessage, '_id' | 'createdAt'>
+  message: Omit<IMessage, '_id' | 'createdAt' | 'readBy'>
 ) => {
   try {
     const { data } = await axiosPublic.post(ENDPOINTS.MESSAGES, message)

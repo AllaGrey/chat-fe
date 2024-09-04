@@ -8,7 +8,9 @@ import {
   getChatMessages,
   sendMessage,
 } from '../services'
+import { readChatMessages } from '../services/chatsOperations'
 import { IChatsState } from '../types'
+import { useAuthStore } from './authStore'
 
 export const useChatsStore = create<IChatsState>((set, get) => ({
   chats: [],
@@ -26,8 +28,16 @@ export const useChatsStore = create<IChatsState>((set, get) => ({
     set({ chats, isLoading: false })
   },
 
-  openChat: chat => {
-    set({ openedChat: chat })
+  openChat: async chat => {
+    set({ isLoading: true })
+
+    const updatedChats = await readChatMessages(chat._id)
+
+    set({
+      openedChat: chat,
+      chats: updatedChats,
+      isLoading: false,
+    })
   },
 
   closeChat: () => {
@@ -72,14 +82,44 @@ export const useChatsStore = create<IChatsState>((set, get) => ({
 
   addMessage: async newMessage => {
     await sendMessage(newMessage)
-    // set(state => ({
-    //   messageList: [...state.messageList, message],
-    // }))
   },
 
   receiveMessage: newMessage => {
+    const currentUser = useAuthStore.getState().currentUser?.id
+
+    const isMessageFromOtherUser = newMessage.user !== currentUser
+
+    set(state => {
+      const updatedChats = state.chats.map(chat => {
+        if (chat._id === newMessage.chat) {
+          const unreadMessagesCount = isMessageFromOtherUser
+            ? chat.unreadMessagesCount + 1
+            : chat.unreadMessagesCount
+
+          return {
+            ...chat,
+            unreadMessagesCount,
+          }
+        }
+
+        return chat
+      })
+      return {
+        ...state,
+        messageList: [...state.messageList, newMessage],
+        chats: updatedChats,
+        isLoading: false,
+      }
+    })
+  },
+
+  updateChatUnreadCount: chatId => {
     set(state => ({
-      messageList: [...state.messageList, newMessage],
+      chats: state.chats.map(chat =>
+        chat._id === chatId
+          ? { ...chat, unreadMessagesCount: chat.unreadMessagesCount + 1 }
+          : chat
+      ),
     }))
   },
 

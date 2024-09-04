@@ -1,8 +1,9 @@
-import { FC, MouseEvent, useState } from 'react'
+import { FC, MouseEvent, useEffect, useState } from 'react'
 
 import moment from 'moment'
 
-import { useChatsStore } from '../../store'
+import useSocket from '../../hooks'
+import { useAuthStore, useChatsStore } from '../../store'
 import { IChat } from '../../types'
 import { truncateString } from '../../utils'
 import { Icon } from '../Icon'
@@ -15,13 +16,48 @@ type Props = {
 }
 
 export const ChatCard: FC<Props> = ({ chat }) => {
-  const { _id, latestMessage } = chat
+  const { _id, latestMessage, unreadMessagesCount } = chat
   const { name, surname, avatar } = chat.otherUser
 
-  const { openedChat, openChat, closeChat, getMessageList, deleteChat } =
-    useChatsStore()
+  const {
+    openedChat,
+    openChat,
+    closeChat,
+    getMessageList,
+    deleteChat,
+    receiveMessage,
+    updateChatUnreadCount,
+  } = useChatsStore()
+
+  const { currentUser } = useAuthStore()
+
+  const { onMessage } = useSocket()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  useEffect(() => {
+    onMessage(newMessage => {
+      const parsedMessage = JSON.parse(newMessage)
+
+      if (
+        parsedMessage.chat === chat._id &&
+        parsedMessage.user !== currentUser?.id
+      ) {
+        receiveMessage(parsedMessage)
+
+        if (openedChat?._id !== chat._id) {
+          updateChatUnreadCount(chat._id)
+        }
+      }
+    })
+  }, [
+    onMessage,
+    chat._id,
+    openedChat,
+    currentUser?.id,
+    receiveMessage,
+    updateChatUnreadCount,
+  ])
 
   const cutMessage = latestMessage ? truncateString(latestMessage.text, 16) : ''
   const formattedDate = latestMessage
@@ -66,6 +102,11 @@ export const ChatCard: FC<Props> = ({ chat }) => {
         >
           <Icon width={20} height={20} iconName="close" />
         </button>
+        {unreadMessagesCount > 0 && (
+          <span className={styles.unreadMessageCount}>
+            {unreadMessagesCount}
+          </span>
+        )}
       </div>
       <Modal
         isOpen={isModalOpen}

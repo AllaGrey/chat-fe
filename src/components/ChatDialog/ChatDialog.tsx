@@ -31,8 +31,6 @@ export const ChatDialog: FC = () => {
       chat: openedChat._id,
     }
 
-    // console.log(messageObj)
-
     addMessage(messageObj)
   }
   return (

@@ -5,6 +5,7 @@ declare const styles: {
   readonly "chatName": string;
   readonly "chatTimestamp": string;
   readonly "deleteButton": string;
+  readonly "unreadMessageCount": string;
   readonly "wrapper": string;
 };
 export = styles;

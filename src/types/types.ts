@@ -37,12 +37,14 @@ export interface IMessage {
   text: string
   chat: string
   createdAt: string
+  readBy: string[]
 }
 
 export interface IChat {
   _id: string
   latestMessage: ILatestMessage
   otherUser: Omit<IUser, 'accessToken' | 'id'> & { _id: string }
+  unreadMessagesCount: number
 }
 
 export interface IChatsState {
@@ -58,8 +60,11 @@ export interface IChatsState {
   createChat: (partnerId: string) => void
   deleteChat: (chatId: string) => void
   getMessageList: () => void
-  addMessage: (newMessage: Omit<IMessage, '_id' | 'createdAt'>) => void
+  addMessage: (
+    newMessage: Omit<IMessage, '_id' | 'createdAt' | 'readBy'>
+  ) => void
   receiveMessage: (newMessage: IMessage) => void
+  updateChatUnreadCount: (chatId: string) => void
   getAllUsers: () => void
   filterUsers: (filterValue: string) => void
 }
