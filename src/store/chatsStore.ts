@@ -10,7 +10,6 @@ import {
 } from '../services'
 import { readChatMessages } from '../services/chatsOperations'
 import { IChatsState } from '../types'
-import { useAuthStore } from './authStore'
 
 export const useChatsStore = create<IChatsState>((set, get) => ({
   chats: [],
