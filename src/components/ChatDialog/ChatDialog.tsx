@@ -50,7 +50,7 @@ export const ChatDialog: FC = () => {
         </button>
       </div>
 
-      <div>
+      <div className={styles.content}>
         <MessageList />
         <MessageInput onSendMessage={handleSendMessage} />
       </div>

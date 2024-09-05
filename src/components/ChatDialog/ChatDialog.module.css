@@ -30,3 +30,7 @@
 .closeButton:focus {
   color: var(--accent-color);
 }
+
+.content {
+  width: 100%;
+}

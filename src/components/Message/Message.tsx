@@ -21,7 +21,7 @@ export const Message: FC<Props> = ({ message, avatar }) => {
   const formattedDate = moment(createdAt).format('MMM/D/YYYY, h:mm A')
 
   return (
-    <li
+    <div
       className={[styles.wrapper, `${isMe ? styles.myMessage : null}`].join(
         ' '
       )}
@@ -36,6 +36,6 @@ export const Message: FC<Props> = ({ message, avatar }) => {
         <p className={styles.messageContent}>{text}</p>
       </div>
       <p className={styles.messageDate}>{formattedDate}</p>
-    </li>
+    </div>
   )
 }
